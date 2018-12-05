@@ -1,0 +1,20 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 0,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 985,
+       "width": 1860,
+       "x": 30,
+       "y": 65
+    },
+    "percent": 1,
+    "swallows": [
+       {
+           "class": "^Firefox$"
+       }
+    ],
+    "type": "con"
+}
+

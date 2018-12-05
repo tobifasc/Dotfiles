@@ -1,0 +1,2 @@
+pkill -o chrome
+reboot

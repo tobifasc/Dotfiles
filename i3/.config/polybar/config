@@ -1,0 +1,251 @@
+[colors]
+; Black
+light-black	= #232323
+;lighter-black	= #373b41
+lighter-black	= #215aaf
+color0-deep	=	#131313
+black 	= #000000
+; Red
+color1	= #aa4b66
+color9	= #dc6184
+; Green
+color2	= #789048
+color10	= #8eaa55
+; Yellow	(Orange)
+color3	= #c87129
+color11	= #fa8d33
+; Blue
+color4	= #5665aa
+color12	= #6f82dc
+; Magenta
+color5	= #aa5f98
+color13	=	#dc7ac4
+; Cyan
+color6	= #6456aa
+color14	= #816fdc
+; White
+color7	= #c7c4c0
+color15	= #f9f5f0
+; Grey
+grey	= #ddd
+
+
+[bar/waples]
+monitor = HDMI-0
+width = 100%
+height = 35
+background = ${colors.light-black}
+foreground = ${colors.grey}
+line-size = 2
+padding-left = 3
+padding-right = 3
+module-margin-left = 0
+module-margin-right = 0
+spacing = 1
+fixed-center = true
+
+offset-x = 0
+offset-y = 0
+
+font-0 = Open Sans:size=11:weight=medium;3
+font-1 = "Font Awesome 5 Free:pixelsize=13;3"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=13;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=13;3"
+
+;tray-position = left
+;tray-detached = false
+;tray-maxsize = 66
+;tray-transparant = false
+;tray-background = ${colors.lighter-black}
+
+modules-left = i3
+modules-center = sp_prev_btn sp_play_btn sp_next_btn sp_title
+modules-right = volume eth date powermenubarlauncher
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[bar/waples_secondary]
+monitor = DVI-D-0
+width = 100%
+height = 35
+background = ${colors.light-black}
+foreground = ${colors.grey}
+line-size = 2
+padding-left = 3
+padding-right = 3
+spacing = 1
+fixed-center = false
+
+font-0 = Open Sans:size=11:weight=medium;3
+font-1 = "Font Awesome 5 Free:pixelsize=13;3"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=13;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=13;3"
+
+modules-left = i3
+modules-center = 
+modules-right = date
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[module/i3]
+type = internal/i3
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-default = 
+
+format = <label-state> <label-mode>
+
+label-focused = %icon%
+label-focused-background = ${colors.black}
+label-focused-underline= ${colors.grey}
+label-focused-padding = 7
+
+label-unfocused-padding = 7
+
+label-urgent-padding = 7
+
+label-visible-padding = 7
+
+pin-workspaces = true
+
+[module/eth]
+type = internal/network
+interface = enp30s0
+interval = 10
+label-connected-foreground = ${colors.grey}
+format-disconnected = " "
+format-connected-prefix = " "
+format-padding = 0
+label-connected = %local_ip%
+
+
+[module/date]
+type = internal/date
+interval = 10
+date = " %Y-%m-%d"
+date-alt = " %Y-%m-%d"
+time = %H:%M
+time-alt = " %H:%M %Y-%m-%d"
+label = %time%
+label-foreground = ${colors.grey}
+format-padding = 7
+
+
+[module/volume]
+type = internal/volume
+format-volume-prefix = " " 
+;format-volume-prefix-foregroud = ${colors.color2}
+label = %volume%
+label-volume-foreground = ${colors.grey}
+format-volume-padding = 7
+label-muted = " 0%"
+format-muted-padding = 7
+
+[module/sp_play_btn]
+type = custom/script
+exec = python -u $HOME/bin/spotify-polybar.py status
+click-left = $HOME/bin/spotify-polybar.py play
+format-padding = 3
+tail = true
+
+[module/sp_prev_btn]
+type = custom/text
+content = ""
+click-left = $HOME/bin/spotify-polybar.py prev
+format-padding = 3
+
+[module/sp_next_btn]
+type = custom/text
+content = ""
+click-left = $HOME/bin/spotify-polybar.py next
+format-padding = 3
+
+[module/sp_title]
+type = custom/script
+exec = python -u $HOME/bin/spotify-polybar.py title
+click-left = i3-msg workspace 4
+tail = true
+format-padding = 3
+
+[module/powermenubarlauncher]
+type = custom/text
+content = "  "
+click-left = polybar powermenubar
+format-padding = 0
+
+[bar/powermenubar]
+monitor = HDMI-0
+width = 400
+height = 32
+radius = 0
+
+background = ${colors.light-black}
+foreground = ${colors.grey}
+separator = |
+
+offset-x = 1515
+; 1515 + 400 + 5 = 1920
+offset-y = 40
+
+module-margin = 2 
+
+;font-0 = Source Code Pro:size=10;2
+font-0 = DejaVu Sans:size=10;2
+font-1 = "Font Awesome 5 Free:pixelsize=13;3"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=13;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=13;3"
+;http://fontawesome.io/cheatsheet/
+
+modules-center = lock logout suspend reboot poweroff closepowermenubar
+
+override-redirect = true
+wm-restack = true
+
+
+
+[module/lock]
+type = custom/text
+content = "Lock"
+click-left = "pkill -n polybar ; sh $HOME/bin/i3lock-fancy/lock"
+
+
+[module/suspend]
+type = custom/text
+content = "Suspend"
+click-left = "pkill -n polybar ; sh $HOME/bin/lock.sh && systemctl suspend"
+
+
+[module/logout]
+type = custom/text
+content = "Logout"
+click-left = "pkill -n polybar ; i3-msg exit"
+
+
+[module/reboot]
+type = custom/text
+content = "Reboot"
+click-left = "pkill -n polybar ; systemctl reboot"
+
+
+[module/poweroff]
+type = custom/text
+content = "Poweroff"
+click-left = "pkill -n polybar ; systemctl poweroff"
+
+
+[module/closepowermenubar]
+type = custom/text
+content = "Cancel"
+click-left = "pkill -n polybar"
