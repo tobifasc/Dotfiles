@@ -58,7 +58,7 @@ ZSH_THEME="custom_avit"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode thefuck)
+plugins=(git vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -94,3 +94,5 @@ export ALSA_CARD=Generic
 #
 cowsay -f flaming-sheep oof owie ouch, my bones
 
+
+eval $(thefuck --alias)
