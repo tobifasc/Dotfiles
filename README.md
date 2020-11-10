@@ -3,13 +3,7 @@
 ## Usage
 To manage these dotfiles you could use [stow](https://www.gnu.org/software/stow/).
 
-While inside the repository execute
-
-`stow vim`
-
-`stow zsh`
-
-`stow i3`
+Just run `setup.sh`
 
 ## Additional modules
 
