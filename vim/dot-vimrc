@@ -1,17 +1,10 @@
 set nocompatible
-
-let mapleader = " "
-inoremap jj <Esc>
-
 syntax on
-
 set showmode
-
 set hlsearch
 set incsearch
 set ignorecase
 set showmatch
-map <leader>l :noh<cr>
 
 filetype plugin indent on
 " show existing tab with 4 spaces width
@@ -21,9 +14,37 @@ set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
 
+" mappings
+let mapleader = " "
+inoremap jj <Esc>
+map <leader>l :noh<cr>
 
 " wsltty cursor settings
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
+
+" vim-plug
+" run :PlugInstall after updating list
+call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox'
+
+Plug 'lervag/vimtex'
+    let g:tex_flavor = 'latex'
+    let g:vimtex_view_general_viewer = 'okular'
+    let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+    let g:vimtex_view_general_options_latexmk = '--unique'
+
+Plug 'sirver/ultisnips'
+    let g:UltiSnipsExpandTrigger = '<Tab>'
+    let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+    let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+call plug#end()
+
+autocmd vimenter * ++nested colorscheme gruvbox
+
