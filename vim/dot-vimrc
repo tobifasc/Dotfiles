@@ -41,6 +41,8 @@ Plug 'sirver/ultisnips'
     let g:UltiSnipsJumpForwardTrigger = '<Tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
 
+Plug 'honza/vim-snippets'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
