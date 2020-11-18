@@ -54,9 +54,12 @@ autocmd vimenter * ++nested colorscheme gruvbox
 
 " Use tab to navigate coc and cr to accept
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"if not pumvisible use <S-Tab> to shift left
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>" 
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
 
 let g:vimtex_quickfix_open_on_warning = 0
+
