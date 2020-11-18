@@ -36,17 +36,32 @@ Plug 'lervag/vimtex'
     let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
     let g:vimtex_view_general_options_latexmk = '--unique'
 
-Plug 'sirver/ultisnips'
-    let g:UltiSnipsExpandTrigger = '<Tab>'
-    let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-    let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
+"Plug 'sirver/ultisnips'
+"    let g:UltiSnipsExpandTrigger = '<Tab>'
+"    let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+"    let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
+Plug 'honza/vim-snippets'
 
 Plug 'honza/vim-snippets'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+Plug 'neoclide/coc.nvim'
+
+
 call plug#end()
 
 autocmd vimenter * ++nested colorscheme gruvbox
+
+" Use tab to navigate coc and cr to accept
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"if not pumvisible use <S-Tab> to shift left
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>" 
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<s-tab>'
+
+let g:vimtex_quickfix_open_on_warning = 0
 
