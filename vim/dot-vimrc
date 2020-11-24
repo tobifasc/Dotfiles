@@ -6,6 +6,7 @@ set ignorecase
 set showmatch
 set number relativenumber
 set noshowmode
+set scrolloff=8
 
 filetype plugin indent on
 " show existing tab with 4 spaces width
@@ -25,6 +26,27 @@ let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
+
+
+" vim-plug
+" run :PlugInstall after updating list
+call plug#begin('~/.vim/plugged')
+    Plug 'morhetz/gruvbox'
+
+    Plug 'lervag/vimtex'
+        let g:tex_flavor = 'latex'
+        let g:vimtex_view_general_viewer = 'okular'
+        let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+        let g:vimtex_view_general_options_latexmk = '--unique'
+
+    Plug 'honza/vim-snippets'
+
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+
+    Plug 'neoclide/coc.nvim'
+call plug#end()
+
 
 " statusline
 function! GitBranch()
@@ -57,32 +79,7 @@ set statusline+=%= " right side
 set statusline+=%#GruvboxYellowSign#
 set statusline+=\ %y\ %l:%c\/%L\ 
 
-" vim-plug
-" run :PlugInstall after updating list
-call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
-
-Plug 'lervag/vimtex'
-    let g:tex_flavor = 'latex'
-    let g:vimtex_view_general_viewer = 'okular'
-    let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-    let g:vimtex_view_general_options_latexmk = '--unique'
-
-"Plug 'sirver/ultisnips'
-"    let g:UltiSnipsExpandTrigger = '<Tab>'
-"    let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-"    let g:UltiSnipsJumpBackwardTrigger = '<s-Tab>'
-
-Plug 'honza/vim-snippets'
-
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-Plug 'neoclide/coc.nvim'
-
-
-call plug#end()
-
+" colorscheme
 autocmd vimenter * ++nested colorscheme gruvbox
 
 " Use tab to navigate coc and cr to accept
@@ -96,3 +93,24 @@ let g:coc_snippet_prev = '<s-tab>'
 
 let g:vimtex_quickfix_open_on_warning = 0
 
+function SmoothScroll(up)
+    if a:up
+        let scrollaction="\<C-y>"
+    else
+        let scrollaction="\<C-e>"
+    endif
+    exec "normal " . scrollaction
+    redraw
+    let counter=1
+    while counter<&scroll
+        let counter+=1
+        sleep 15m
+        redraw
+        exec "normal " . scrollaction
+    endwhile
+endfunction
+
+nnoremap <C-U> :call SmoothScroll(1)<Enter>
+nnoremap <C-D> :call SmoothScroll(0)<Enter>
+inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
