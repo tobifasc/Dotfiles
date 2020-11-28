@@ -19,7 +19,7 @@ set expandtab
 " mappings
 let mapleader = " "
 inoremap jj <Esc>
-map <leader>l :noh<cr>
+map <silent> <leader>l :noh<cr>
 
 " wsltty cursor settings
 let &t_ti.="\e[1 q"
@@ -45,18 +45,25 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'
 
     Plug 'neoclide/coc.nvim'
+        let g:coc_global_extensions = ['coc-snippets']
 call plug#end()
 
 
 " statusline
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+function! StatuslineGitBranch()
+  let b:gitbranch=""
+  if &modifiable
+    try
+      let l:dir=expand('%:p:h')
+      let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
+      if !v:shell_error
+        let b:gitbranch="[".substitute(l:gitrevparse, '\n', '', 'g')."] "
+      endif
+    catch
+    endtry
+  endif
 endfunction
 
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0 ? '['.l:branchname.']' : ''
-endfunction
 
 " Dictionary: take mode() input -> longer notation of current mode
 " mode() is defined by Vim
@@ -74,7 +81,7 @@ set statusline+=%#GruvboxYellowSign#
 set statusline+=\ %{ModeCurrent()}\ 
 set statusline+=%0*
 set statusline+=\ %F\ %m%r%h%w
-set statusline+=%{StatuslineGit()}
+set statusline+=%{b:gitbranch}
 set statusline+=%= " right side
 set statusline+=%#GruvboxYellowSign#
 set statusline+=\ %y\ %l:%c\/%L\ 
@@ -114,3 +121,8 @@ nnoremap <C-U> :call SmoothScroll(1)<Enter>
 nnoremap <C-D> :call SmoothScroll(0)<Enter>
 inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
 inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
+
+augroup GetGitBranch
+  autocmd!
+  autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
+augroup END
