@@ -45,7 +45,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'
 
     Plug 'neoclide/coc.nvim'
-        let g:coc_global_extensions = ['coc-snippets']
+        let g:coc_global_extensions = ['coc-snippets', 'coc-vimtex']
 call plug#end()
 
 
