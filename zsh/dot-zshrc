@@ -92,7 +92,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-cowsay -f flaming-sheep oof owie ouch, my bones
+cowsay -f cheese oof owie ouch, my bones
 
 
 eval $(thefuck --alias)
