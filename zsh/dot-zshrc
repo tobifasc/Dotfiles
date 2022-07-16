@@ -96,3 +96,7 @@ cowsay -f cheese oof owie ouch, my bones
 
 
 eval $(thefuck --alias)
+
+bindkey -M viins 'jj' vi-cmd-mode
+
+VI_MODE_SET_CURSOR=true
